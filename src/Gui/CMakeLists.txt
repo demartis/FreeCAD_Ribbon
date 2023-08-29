@@ -1099,6 +1099,7 @@ SET(Workbench_CPP_SRCS
     PythonWorkbenchPyImp.cpp
     ToolBarManager.cpp
     ToolBoxManager.cpp
+    StdToolBarManager.cpp
     Workbench.cpp
     WorkbenchFactory.cpp
     WorkbenchManager.cpp
@@ -1110,11 +1111,30 @@ SET(Workbench_SRCS
     MenuManager.h
     ToolBarManager.h
     ToolBoxManager.h
+    StdToolBarManager.h
     Workbench.h
     WorkbenchFactory.h
     WorkbenchManager.h
 )
 SOURCE_GROUP("Workbench" FILES ${Workbench_SRCS})
+
+
+
+SET(Workbench_Ribbon_SRCS
+    Ribbon/ribbon.cpp  
+    Ribbon/ribbonbuttongroup.cpp 
+    Ribbon/ribbontabcontent.cpp
+    Ribbon/ribbon.h  
+    Ribbon/ribbonbuttongroup.h 
+    Ribbon/ribbontabcontent.h
+    Ribbon/RibbonToolBar.cpp
+    Ribbon/RibbonToolBar.h
+    Ribbon/RibbonToolBarManager.cpp
+    Ribbon/RibbonToolBarManager.h
+    Ribbon/RibbonTitleBar.cpp
+    Ribbon/RibbonTitleBar.h
+)
+SOURCE_GROUP("WorkbenchRibbon" FILES ${Workbench_Ribbon_SRCS})
 
 SET(Selection_SRCS
     SelectionObjectPyImp.cpp
@@ -1230,6 +1250,7 @@ SET(FreeCADGui_SRCS
     ${Params_SRCS}
     ${View_SRCS}
     ${Workbench_SRCS}
+    ${Workbench_Ribbon_SRCS}
     ${Selection_SRCS}
     ${FreeCADGui_SRCS}
 )

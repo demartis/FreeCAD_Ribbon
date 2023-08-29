@@ -404,13 +404,9 @@ bool Workbench::activate()
 {
     ToolBarItem* tb = setupToolBars();
     setupCustomToolbars(tb, "Toolbar");
-    ToolBarManager::getInstance()->setup( tb );
+    ToolBarManager::getInstance()->setup(QString::fromLatin1(name().c_str()), tb );
     delete tb;
 
-    //ToolBarItem* cb = setupCommandBars();
-    //setupCustomToolbars(cb, "Toolboxbar");
-    //ToolBoxManager::getInstance()->setup( cb );
-    //delete cb;
 
     DockWindowItems* dw = setupDockWindows();
     DockWindowManager::instance()->setup( dw );
