@@ -16,4 +16,5 @@
 Overview
 --------
 
-Implémentation d'un ruban dans Freecad.
+Implementing a ribbon in Freecad.
+Only Gui is impacted.
