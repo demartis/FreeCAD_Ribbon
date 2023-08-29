@@ -13,6 +13,7 @@
 class QAction;
 class QToolBar;
 class Ribbon;
+class QDockWidget;
 class RibbonTabContent;
 class RibbonButtonGroup;
 class RibbonToolbar;
