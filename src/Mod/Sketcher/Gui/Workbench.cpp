@@ -192,8 +192,8 @@ void Workbench::activated()
      */
     Gui::Document* doc = Gui::Application::Instance->activeDocument();
     if (isSketchInEdit(doc)) {
-        Gui::ToolBarManager::getInstance()->setState(editModeToolbarNames(),
-                                                     Gui::ToolBarManager::State::ForceAvailable);
+        Gui::ToolBarManager::getInstance()->getToolbarImplementation()->setState(editModeToolbarNames(),
+                                                     Gui::ToolBarManagerInterface::State::ForceAvailable);
     }
 }
 
@@ -202,13 +202,13 @@ void Workbench::enterEditMode()
     /* Ensure the state left by the non-edit mode toolbars is saved (in case of changing to edit
      * mode) without changing workbench
      */
-    Gui::ToolBarManager::getInstance()->setState(nonEditModeToolbarNames(),
-                                                 Gui::ToolBarManager::State::SaveState);
+    Gui::ToolBarManager::getInstance()->getToolbarImplementation()->setState(nonEditModeToolbarNames(),
+                                                 Gui::ToolBarManagerInterface::State::SaveState);
 
-    Gui::ToolBarManager::getInstance()->setState(editModeToolbarNames(),
-                                                 Gui::ToolBarManager::State::ForceAvailable);
-    Gui::ToolBarManager::getInstance()->setState(nonEditModeToolbarNames(),
-                                                 Gui::ToolBarManager::State::ForceHidden);
+    Gui::ToolBarManager::getInstance()->getToolbarImplementation()->setState(editModeToolbarNames(),
+                                                 Gui::ToolBarManagerInterface::State::ForceAvailable);
+    Gui::ToolBarManager::getInstance()->getToolbarImplementation()->setState(nonEditModeToolbarNames(),
+                                                 Gui::ToolBarManagerInterface::State::ForceHidden);
 }
 
 void Workbench::leaveEditMode()
@@ -223,14 +223,14 @@ void Workbench::leaveEditMode()
     auto* workbench = Gui::WorkbenchManager::instance()->active();
 
     if (workbench->name() == "SketcherWorkbench") {
-        Gui::ToolBarManager::getInstance()->setState(editModeToolbarNames(),
-                                                     Gui::ToolBarManager::State::SaveState);
+        Gui::ToolBarManager::getInstance()->getToolbarImplementation()->setState(editModeToolbarNames(),
+                                                     Gui::ToolBarManagerInterface::State::SaveState);
     }
 
-    Gui::ToolBarManager::getInstance()->setState(editModeToolbarNames(),
-                                                 Gui::ToolBarManager::State::RestoreDefault);
-    Gui::ToolBarManager::getInstance()->setState(nonEditModeToolbarNames(),
-                                                 Gui::ToolBarManager::State::RestoreDefault);
+    Gui::ToolBarManager::getInstance()->getToolbarImplementation()->setState(editModeToolbarNames(),
+                                                 Gui::ToolBarManagerInterface::State::RestoreDefault);
+    Gui::ToolBarManager::getInstance()->getToolbarImplementation()->setState(nonEditModeToolbarNames(),
+                                                 Gui::ToolBarManagerInterface::State::RestoreDefault);
 }
 
 namespace SketcherGui
