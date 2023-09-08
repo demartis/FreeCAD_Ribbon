@@ -13,6 +13,7 @@
 #include "Application.h"
 #include "Command.h"
 #include "MainWindow.h"
+ 
 
 // -----------------------------------------------------------
 
@@ -29,27 +30,22 @@ RibbonTitlebar::RibbonTitlebar(QWidget* parent)
 		// menu->hide();
 	}
 
-
-	QVBoxLayout* mainLayout = new QVBoxLayout;
-	setLayout(mainLayout);
-	QHBoxLayout* hlayout = new QHBoxLayout();
+	setFixedHeight(30);
+	
 	auto picon = App::Application::Config()["ProgramLogo"];
 	QPixmap pixmap(QString::fromLatin1(picon.c_str()));  
 
-	QLabel* icon = new QLabel();
+	QLabel* icon = new QLabel(mw);
 	icon->setPixmap(pixmap.scaled(55, 55, Qt::KeepAspectRatio));  
-	icon->setStyleSheet(QString::fromLatin1("QLabel { position: absolute; left: 5px; top: 20px; margin-top: 4px; background-color : #2470BF; color : black; }"));
+	icon->setStyleSheet(QString::fromLatin1("QLabel { background-color : #2470BF; color : black; }"));
 
-	auto title = App::Application::Config()["WindowTitle"];
-	QLabel* label = new QLabel(QString::fromLatin1(title.c_str()).toUpper());
-	label->setStyleSheet(QString::fromLatin1("QLabel { margin-left: 10px; margin-top: 4px;font-size:14px; font-weight: bold; background-color : #2470BF; color : white;  }"));
+	icon->move(10, 28);
+	icon->raise();
 
-
-	hlayout->addWidget(icon);
-	hlayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
-	hlayout->addWidget(label);
-	hlayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
-
+	//hlayout->addWidget(icon);
+	 
+	//hlayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
+	
 	resizeButton_ = new QToolButton(mw);
 	if (mw->isMaximized() || mw->isFullScreen())
 	{
@@ -71,26 +67,37 @@ RibbonTitlebar::RibbonTitlebar(QWidget* parent)
 
 	QObject::connect(resizeButton_, &QToolButton::clicked, this, &RibbonTitlebar::maximizeRestore);
 	QObject::connect(closeButton, &QToolButton::clicked, [this]() {
-		qApp->exit();
+		qApp->quit();
 		});
 
-
+	auto title = App::Application::Config()["WindowTitle"];
+	QLabel* label = new QLabel(QString::fromLatin1(title.c_str()).toUpper(),this);
+	label->setStyleSheet(QString::fromLatin1("QLabel {   font-size:12px; font-weight: bold; background-color : #2470BF; color : white;  }"));
+	/*label->move(500, 28);
+	label->raise();*/
+	 
+	
+	QHBoxLayout* hlayout = new QHBoxLayout(this);
+	hlayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
+	hlayout->addWidget(label);
+	hlayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
 	hlayout->addWidget(resizeButton_);
 	hlayout->addWidget(closeButton);
+	setLayout(hlayout);
 
-
-
-	mainLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
-	mainLayout->addLayout(hlayout);
-	mainLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
 }
+
+
+
 
 
 void RibbonTitlebar::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton) {
-		dragPosition_ = event->globalPos() - frameGeometry().topLeft();
+		Gui::MainWindow* mw = Gui::getMainWindow();
+		if (!mw) return;
+		dragPosition_ = event->globalPos() - mw->frameGeometry().topLeft();
 		event->accept();
 	}
 }
