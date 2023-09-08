@@ -91,7 +91,7 @@ QString RibbonToolBarManager::getTabName(const QString& workbenchName, const QSt
 RibbonToolbar* RibbonToolBarManager::createToolbar(const QString& workbenchName, const QString& groupLabel)
 {
 	QString destTab = getTabName(workbenchName, groupLabel);
-
+	if(destTab.isEmpty()) return nullptr;
 	RibbonTabContent* tab = ribbon_->getTab(destTab);
 	if (!tab)
 	{
@@ -152,6 +152,7 @@ void RibbonToolBarManager::setup(const QString& workbenchName, ToolBarItem* tool
 		if (!toolbar)
 		{
 			toolbar = createToolbar(QString::fromUtf8(tabName.c_str()), toolbarName);
+			if (!toolbar) continue;
 			//toolbar->setObjectName(toolbarName);
 			if (nameAsToolTip) {
 				auto tooltip = QChar::fromLatin1('[')
