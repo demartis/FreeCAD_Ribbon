@@ -147,6 +147,7 @@ void RibbonToolBarManager::setup(const QString& workbenchName, ToolBarItem* tool
 		if (toolbarName.contains(exclude))
 			continue;
 		std::string tabName = getTabName(workbenchName, toolbarName).toStdString();
+		if(tabName.empty()) continue;
 		bool visible = hPref->GetBool(toolbarName.toStdString().c_str(), true);
 		auto toolbar = findToolBar(toolbarName);
 		if (!toolbar)
