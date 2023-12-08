@@ -818,11 +818,11 @@ class _Site(ArchIFC.IfcProduct):
             g.append(child)
             obj.Group = g
 
-    def __getstate__(self):
+    def dumps(self):
 
         return None
 
-    def __setstate__(self,state):
+    def loads(self,state):
 
         return None
 
@@ -1164,6 +1164,11 @@ class _ViewProviderSite:
 
         if hasattr(self, 'trueNorthRotation') and self.trueNorthRotation is not None:
             return
+        if not FreeCADGui.ActiveDocument.ActiveView:
+            return
+        if not hasattr(FreeCADGui.ActiveDocument.ActiveView, 'getSceneGraph'):
+            return
+
         from pivy import coin
         self.trueNorthRotation = coin.SoTransform()
         sg = FreeCADGui.ActiveDocument.ActiveView.getSceneGraph()
@@ -1172,10 +1177,18 @@ class _ViewProviderSite:
 
     def removeTrueNorthRotation(self):
 
-        if hasattr(self, 'trueNorthRotation') and self.trueNorthRotation is not None:
-            sg = FreeCADGui.ActiveDocument.ActiveView.getSceneGraph()
-            sg.removeChild(self.trueNorthRotation)
-            self.trueNorthRotation = None
+        if not hasattr(self, 'trueNorthRotation'):
+            return
+        if self.trueNorthRotation is None:
+            return
+        if not FreeCADGui.ActiveDocument.ActiveView:
+            return
+        if not hasattr(FreeCADGui.ActiveDocument.ActiveView, 'getSceneGraph'):
+            return
+
+        sg = FreeCADGui.ActiveDocument.ActiveView.getSceneGraph()
+        sg.removeChild(self.trueNorthRotation)
+        self.trueNorthRotation = None
 
     def updateTrueNorthRotation(self):
 
@@ -1223,11 +1236,11 @@ class _ViewProviderSite:
             return
         self.compass.scale(vobj.Object.ProjectedArea)
 
-    def __getstate__(self):
+    def dumps(self):
 
         return None
 
-    def __setstate__(self,state):
+    def loads(self,state):
 
         return None
 

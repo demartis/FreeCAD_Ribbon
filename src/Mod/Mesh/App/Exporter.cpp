@@ -102,7 +102,7 @@ int Exporter::addObject(App::DocumentObject *obj, float tol)
     for (std::string & sub : expandSubObjectNames(obj, subObjectNameCache, 0)) {
         Base::Matrix4D matrix;
         auto sobj = obj->getSubObject(sub.c_str(), nullptr, &matrix);
-        auto linked = sobj->getLinkedObject(true, &matrix, false);
+        auto linked = sobj->getLinkedObject(true, &matrix, true);
         auto it = meshCache.find(linked);
         if (it == meshCache.end()) {
             if (linked->isDerivedFrom(Mesh::Feature::getClassTypeId())) {
@@ -127,6 +127,9 @@ int Exporter::addObject(App::DocumentObject *obj, float tol)
                 }
                 Py_DECREF(pyobj);
             }
+        }
+        else if (it->second.getTransform() != matrix) {
+            it->second.setTransform(matrix);
         }
 
         // Add a new mesh
@@ -299,6 +302,11 @@ bool Exporter3MF::addMesh(const char *name, const MeshObject & mesh)
     }
 
     return ok;
+}
+
+void Exporter3MF::setForceModel(bool model)
+{
+    d->writer3mf.SetForceModel(model);
 }
 
 void Exporter3MF::write()
