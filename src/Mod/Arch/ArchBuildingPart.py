@@ -356,11 +356,11 @@ class BuildingPart(ArchIFC.IfcProduct):
 
         self.setProperties(obj)
 
-    def __getstate__(self):
+    def dumps(self):
 
         return None
 
-    def __setstate__(self,state):
+    def loads(self,state):
 
         return None
 
@@ -807,7 +807,9 @@ class ViewProviderBuildingPart:
                         if hasattr(vobj,prop) and hasattr(child.ViewObject,prop[8:]) and not hasattr(child,"ChildrenOverride"):
                             setattr(child.ViewObject,prop[8:],getattr(vobj,prop))
         elif prop in ["CutView","CutMargin"]:
-            if hasattr(vobj,"CutView") and FreeCADGui.ActiveDocument.ActiveView:
+            if hasattr(vobj, "CutView") \
+                    and FreeCADGui.ActiveDocument.ActiveView \
+                    and hasattr(FreeCADGui.ActiveDocument.ActiveView, "getSceneGraph"):
                 sg = FreeCADGui.ActiveDocument.ActiveView.getSceneGraph()
                 if vobj.CutView:
                     from pivy import coin
@@ -1054,10 +1056,10 @@ class ViewProviderBuildingPart:
                     no.LongName = no.CloneOf.LongName
             FreeCAD.ActiveDocument.recompute()
 
-    def __getstate__(self):
+    def dumps(self):
         return None
 
-    def __setstate__(self,state):
+    def loads(self,state):
         return None
 
     def writeInventor(self,obj):

@@ -557,12 +557,12 @@ PyObject*  TopoShapePy::importBrepFromString(PyObject *args)
     Py_Return;
 }
 
-PyObject*  TopoShapePy::__getstate__(PyObject *args) {
+PyObject*  TopoShapePy::dumps(PyObject *args) {
     return exportBrepToString(args);
 }
 
 
-PyObject*  TopoShapePy::__setstate__(PyObject *args) {
+PyObject*  TopoShapePy::loads(PyObject *args) {
     if (! getTopoShapePtr()) {
         PyErr_SetString(Base::PyExc_FC_GeneralError,"no c++ object");
         return nullptr;
@@ -2661,8 +2661,9 @@ PyObject* TopoShapePy::optimalBoundingBox(PyObject *args)
 {
     PyObject* useT = Py_True;
     PyObject* useS = Py_False;
-    if (!PyArg_ParseTuple(args, "|O!O!", &PyBool_Type, &PyBool_Type, &useT, &useS))
+    if (!PyArg_ParseTuple(args, "|O!O!", &PyBool_Type, &useT, &PyBool_Type, &useS)) {
         return nullptr;
+    }
 
     try {
         TopoDS_Shape shape = this->getTopoShapePtr()->getShape();

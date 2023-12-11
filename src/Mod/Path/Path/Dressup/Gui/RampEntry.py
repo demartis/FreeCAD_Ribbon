@@ -164,10 +164,10 @@ class ObjectDressup:
 
         return data
 
-    def __getstate__(self):
+    def dumps(self):
         return None
 
-    def __setstate__(self, state):
+    def loads(self, state):
         return None
 
     def onChanged(self, obj, prop):
@@ -203,7 +203,7 @@ class ObjectDressup:
         if not obj.Base.Path:
             return
 
-        if not obj.Base.Active:
+        if hasattr(obj.Base, 'Active') and not obj.Base.Active:
             path = Path.Path("(inactive operation)")
             obj.Path = path
             return
@@ -884,10 +884,10 @@ class ViewProviderDressup:
             arg1.Object.Base = None
         return True
 
-    def __getstate__(self):
+    def dumps(self):
         return None
 
-    def __setstate__(self, state):
+    def loads(self, state):
         return None
 
 

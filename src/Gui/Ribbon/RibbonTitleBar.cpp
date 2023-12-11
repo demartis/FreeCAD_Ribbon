@@ -67,7 +67,7 @@ RibbonTitlebar::RibbonTitlebar(QWidget* parent)
 
 	QObject::connect(resizeButton_, &QToolButton::clicked, this, &RibbonTitlebar::maximizeRestore);
 	QObject::connect(closeButton, &QToolButton::clicked, [this]() {
-		qApp->quit();
+        Gui::getMainWindow()->close();
 		});
 
 	auto title = App::Application::Config()["WindowTitle"];
