@@ -36,7 +36,7 @@ Ribbon::Ribbon(QWidget* parent)
 		"  top: -1px;"
 		"}"
 		"  QTabWidget::tab-bar {"
-		"  left: 110px;"
+		"  left: 200px;"
 	"  }"
 
 		""

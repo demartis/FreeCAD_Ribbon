@@ -2223,7 +2223,7 @@ void Application::runApplication()
         QPixmap px(path);
         if (!px.isNull()) {
             auto logo = new QLabel();
-            logo->setPixmap(px.scaledToHeight(32));
+            logo->setPixmap(px.scaledToHeight(22));
             mw.statusBar()->addPermanentWidget(logo, 0);
             logo->setFrameShape(QFrame::NoFrame);
         }

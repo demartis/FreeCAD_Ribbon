@@ -36,10 +36,11 @@ RibbonTitlebar::RibbonTitlebar(QWidget* parent)
 	QPixmap pixmap(QString::fromLatin1(picon.c_str()));  
 
 	QLabel* icon = new QLabel(mw);
-	icon->setPixmap(pixmap.scaled(55, 55, Qt::KeepAspectRatio));  
+	icon->setPixmap(pixmap.scaled(180, 40, Qt::KeepAspectRatio));  
 	icon->setStyleSheet(QString::fromLatin1("QLabel { background-color : #2470BF; color : black; }"));
 
-	icon->move(10, 28);
+	icon->move(10, 36);
+    icon->setFixedWidth(180);
 	icon->raise();
 
 	//hlayout->addWidget(icon);
@@ -57,11 +58,13 @@ RibbonTitlebar::RibbonTitlebar(QWidget* parent)
 	}
 
 	resizeButton_->setStyleSheet(QString::fromLatin1("QToolButton { border: 1px solid rgb(235,235,235); color: white; }"));
+    resizeButton_->setFixedHeight(18);
 
 	QToolButton* closeButton = new QToolButton(mw);
 
 	closeButton->setIcon(createIconWithColor(mw->style()->standardIcon(QStyle::SP_TitleBarCloseButton), QColor::fromRgb(235, 235, 235)));
 	closeButton->setStyleSheet(QString::fromLatin1("QToolButton { margin-left: 4px; margin-right: 10px; border: 1px solid rgb(235,235,235);}"));
+    closeButton->setFixedHeight(18);
 
 	//border: 1px solid rgb(235,235,235); color: white; 
 
