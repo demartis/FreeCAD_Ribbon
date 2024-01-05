@@ -30,7 +30,7 @@ RibbonTitlebar::RibbonTitlebar(QWidget* parent)
 		// menu->hide();
 	}
 
-	setFixedHeight(30);
+	setFixedHeight(28);
 	
 	auto picon = App::Application::Config()["ProgramLogo"];
 	QPixmap pixmap(QString::fromLatin1(picon.c_str()));  
@@ -39,8 +39,10 @@ RibbonTitlebar::RibbonTitlebar(QWidget* parent)
 	icon->setPixmap(pixmap.scaled(180, 40, Qt::KeepAspectRatio));  
 	icon->setStyleSheet(QString::fromLatin1("QLabel { background-color : #2470BF; color : black; }"));
 
-	icon->move(10, 36);
-    icon->setFixedWidth(180);
+	icon->move(8, 35);
+    //icon->setFixedWidth(180);
+    icon->setMinimumWidth(178);
+    icon->setMaximumWidth(185);
 	icon->raise();
 
 	//hlayout->addWidget(icon);
@@ -76,6 +78,8 @@ RibbonTitlebar::RibbonTitlebar(QWidget* parent)
 	auto title = App::Application::Config()["WindowTitle"];
 	QLabel* label = new QLabel(QString::fromLatin1(title.c_str()).toUpper(),this);
 	label->setStyleSheet(QString::fromLatin1("QLabel {   font-size:12px; font-weight: bold; background-color : #2470BF; color : white;  }"));
+    label->setMinimumHeight(15);
+
 	/*label->move(500, 28);
 	label->raise();*/
 	 
